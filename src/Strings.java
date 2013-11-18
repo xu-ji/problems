@@ -1,4 +1,7 @@
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 public class Strings {
 	
@@ -109,10 +112,25 @@ public class Strings {
 		}
 	}
 
+	/* Rotate the frame given by (topLeft, topLeft) */
 	private void rotateFrameAt(int[][] m, int topLeft) {
-
+		for (int i = topLeft; i < m.length - 1; i++ ) {
+			int row = topLeft;
+			int col = topLeft;
+			int prevVal = m[row][col];
+			int oldPrevVal = 0;
+			for (int j = 0; j < 4; j++) {
+			// swap the four cells in the frame
+				row = col;
+				col = m.length - 1 - row;
+				oldPrevVal = prevVal;
+				prevVal = m[row][col];
+				m[row][col] = oldPrevVal;		
+			}
+		}
 	}
 
+	/* impossible - remember that you are SWAPPING elements - i.e. the 4th one becomes the 1st!
 	public void rotateMatrix2(int[][] m) {
 		for (int i = 0; i < m.length; i++) {
 			for (int j = 0; j < m.length; j++) {
@@ -121,4 +139,155 @@ public class Strings {
 			}
 		}
 	}
+	*/
+	
+	/* Question 7*/
+	/* WRONG. You'll come across the zeros you set once again, meaning you'll end up 
+	 * with entire matrix of zeros. 
+	public void setColAndRowOfZeroElemToBeZero(int[][] m) {
+		int height = m.length;
+		int width = m[0].length;
+		for (int r = 0; r < height; r++) {
+			for (int c = 0; c < width; c++) {
+				if (m[r][c] == 0) {
+					setRowToBeZero(m, width, r);
+					setColToBeZero(m, height, c);
+				}
+			}
+		}
+	}
+	*/
+
+	public void setColAndRowOfZeroElemToBeZero(int[][] m) {
+		Set<Integer> zeros = new HashSet<Integer>();
+		// unique: 2^x(2y + 1)
+		int height = m.length;
+		int width = m[0].length;
+		for (int r = 0; r < height; r++) {
+			for (int c = 0; c < width; c++) {
+				if (m[r][c] == 0) {
+					zeros.add(1<<r * (c<<1 + 1));
+				}
+			}
+		}
+		
+		//Iterator<Integer> points = zeros.iterator();
+		
+		for (Integer point : zeros) {
+			Pair<Integer> XY = getXY(point);
+			int row = XY.fst;
+			int col = XY.snd;
+			setRowToBeZero(m, width, row);
+			setColToBeZero(m, height, col);
+		}
+	}
+	
+	public class Pair<T> {
+		public T fst;
+		public T snd;
+		public Pair(T fst, T snd) {
+			this.fst = fst;
+			this.snd = snd;
+		}
+	}
+	
+	Pair<Integer> getXY(int point) {
+		int x = 0;
+		while ((point & 1) == 1) {
+			point /= 2;
+			x++;
+		}
+		int y = point >> 1;
+		return new Pair<Integer>(x, y);
+	}
+	
+	private void setRowToBeZero(int[][] m, int lengthOfRow, int row) {	
+		for (int col = 0; col < lengthOfRow; col++) {
+			if (m[row][col] != 0) {
+				m[row][col] = 0;
+			}
+		}
+	}
+	
+	private void setColToBeZero(int[][] m, int lengthOfCol, int col) {
+		for (int row = 0; row < lengthOfCol; row++) {
+			if (m[row][col] != 0) {
+				m[row][col] = 0;
+			}
+		}
+	}
+	
+	// we don't care about specific points - we need rows, and cols, that contain a zero...
+	public void bestSetRowColToZero(int[][] m) {
+		int height = m.length;
+		int width = m[0].length;
+		boolean[] rowHasZero = new boolean[height];
+		boolean[] colHasZero = new boolean[width];
+		for (int row = 0; row < height; row++) {
+			for (int col = 0; col < width; col++) {
+				if (m[row][col] == 0) {
+					rowHasZero[row] = true;
+					colHasZero[col] = true;
+				}
+			}
+		}
+		
+		// now replace with zeros, testing for the condition
+		for (int row = 0; row < height; row++) {
+			for (int col = 0; col < width; col++) {
+				if (rowHasZero[row] || colHasZero[col]) {
+					m[row][col] = 0;
+				}
+			}
+		}
+		
+	}
+
+	/* Question 8*/
+	
+	// one call to isSubstring only
+	// GENIUS! See the big picture!
+	boolean isRotationOf(String str, String rotatedStr) {
+		// do not forget checks
+		if (str.length() != rotatedStr.length()) {
+			return false;
+		}
+
+		// decide empty strings are rotations of each other
+		if (str.length() == 0) {
+			return true;
+		}
+
+		rotatedStr += rotatedStr;
+		return isSubstring(rotatedStr, str);
+	}
+
+	
+	boolean isSubstring(String str, String sub) {
+		if (sub.length() > str.length()) {
+			return false;
+		}
+
+		for (int i = 0; i < str.length(); i++) {
+			if (str.substring(i, str.length() - 1).startsWith(sub)) {
+				return true;		
+			}
+		}
+		return false;
+	}
+
+	boolean isSubstringSimpler(String str, String sub) {
+		if (sub.length() > str.length()) {
+			return false;
+		}
+
+		for (int i = 0; i < str.length() - sub.length(); i++) {
+			if (str.substring(i, str.length()).compareTo(sub) >= 0) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 }
