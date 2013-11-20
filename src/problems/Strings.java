@@ -11,7 +11,6 @@ public class Strings {
 	
 	/* Question 1*/
 	public static boolean isAllUniqueChars(String s) {
-		System.out.println("isAllUniqueChars? " + s);
 	    boolean[] counts = new boolean[128]; // ascii char number
 	    Arrays.fill(counts, false);
 	       for (char c : s.toCharArray()) {
@@ -26,12 +25,15 @@ public class Strings {
 	}
 	
 	/* Question 2*/
-	public static void reverse(String s) {
-	    char[] sArray = s.toCharArray();
+	public static void reverse(char[] sArray) {
+	    //char[] sArray = s.toCharArray(); // char array is copied!
 	    int partition = sArray.length / 2;
 	    for (int i = 0; i < partition; ++i) {
 	    	swap(sArray, i, sArray.length - i - 1);
 	    }
+	    //s = new String(sArray);
+	    // fails - new reference to same object! reference is copied
+	    
 	}
 	
 	public static void swap(char[] a, int from, int to) {
@@ -62,22 +64,21 @@ public class Strings {
 	/* Question 4*/
 	public static void replaceSpaceWithPercentageTwenty(char[] string, int lengthOfStringExcludingEmptyEnd) {
 		int numSpaces = countSpaces(string, lengthOfStringExcludingEmptyEnd - 1);
-		int currStringInd = lengthOfStringExcludingEmptyEnd - 1;
 		int endOfFinalString = lengthOfStringExcludingEmptyEnd + 2*numSpaces - 1;
-		for (int i = currStringInd; i >= 0; i--) {
-			if (string[currStringInd] == ' ') {
+		for (int i = lengthOfStringExcludingEmptyEnd - 1; i >= 0; i--) {
+			if (string[i] == ' ') {
 				string[endOfFinalString--] = '0';
 				string[endOfFinalString--] = '2';
-				string[endOfFinalString] = '%';			
+				string[endOfFinalString--] = '%';			
 			} else {
-				string[endOfFinalString] = string[currStringInd];
+				string[endOfFinalString--] = string[i];
 			}	
 		}	
 	}
 
 	public static int countSpaces(char[] string, int to) {
 		int count = 0;
-		for (int i = 0; i < string.length; i++) {
+		for (int i = 0; i <= to; i++) {
 			if (string[i] == ' ') {
 				count++;
 			}
