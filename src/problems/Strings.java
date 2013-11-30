@@ -107,7 +107,7 @@ public class Strings {
 	
 	/* Question 6*/
 
-	public static void rotateMatrix(int[][] m) {
+	public static void rotateMatrixFailed(int[][] m) {
 		for (int i = 0; i < m.length / 2; i++) {
 			rotateFrameAt(m, i);
 		}
@@ -115,15 +115,17 @@ public class Strings {
 
 	/* Rotate the frame given by (topLeft, topLeft) */
 	private static void rotateFrameAt(int[][] m, int topLeft) {
-		for (int i = topLeft; i < m.length - 1; i++ ) {
+		for (int i = topLeft; i < m.length - topLeft - 1; i++ ) {
 			int row = topLeft;
-			int col = topLeft;
+			int col = i;
 			int prevVal = m[row][col];
 			int oldPrevVal = 0;
+			
 			for (int j = 0; j < 4; j++) {
+				System.out.println("row:" + row + ", col: " + col);
 			// swap the four cells in the frame
-				row = col;
-				col = m.length - 1 - row;
+				
+				
 				oldPrevVal = prevVal;
 				prevVal = m[row][col];
 				m[row][col] = oldPrevVal;		
@@ -141,6 +143,51 @@ public class Strings {
 		}
 	}
 	*/
+	
+	public static void rotateMatrixTranspose(int[][] m) {
+		assert(m.length == m[0].length);
+		// Transpose - i.e. swap elems in top right triangle with bottom left one
+		for (int row = 0; row < m.length; row++) {
+			for (int col = row + 1; col < m.length; col++) {
+				swap(m, row, col, col, row);
+			}
+		}
+		
+		// reverse each row
+		for (int row = 0; row < m.length; row++) {
+			for (int col = 0; col < m.length / 2; col++) {
+				swap(m, row, col, row, m.length - 1 - col);
+			}
+		}
+	}
+	
+	private static void swap(int[][] m, int FstRow, int FstCol, int SndRow, int SndCol) {
+		int Fst = m[FstRow][FstCol];
+		int Snd = m[SndRow][SndCol];
+		Fst = Fst ^ Snd;
+		Snd = Fst ^ Snd;
+		Fst = Fst ^ Snd;
+		m[FstRow][FstCol] = Fst;
+		m[SndRow][SndCol] = Snd;
+	}
+	
+	// NOT in place! O(n^2) space complexity, n is length of matrix
+	// try a 3 x 3 matrix, first row:
+	// start from 0,0 and see what it's pulling
+	public static int[][] rotateMatrixIndices(int[][] m) {
+		if (m.length != m[0].length) {
+			throw new IllegalArgumentException("Attempting to rotate non-square matrix.");
+		}
+		int[][] res = new int[m.length][m.length];
+		
+		for (int row = 0; row < m.length; row++) {
+			for (int col = 0; col < m.length; col++) {
+				res[row][col] = m[m.length - 1 - col][row];
+			}
+		}
+		
+		return res;
+	}
 	
 	/* Question 7*/
 	/* WRONG. You'll come across the zeros you set once again, meaning you'll end up 

@@ -1,5 +1,6 @@
 package tests;
 import static problems.SortsAndSearches.*;
+import static problems.Maths.*;
 
 import java.util.Arrays;
 
@@ -9,7 +10,7 @@ import org.junit.Test;
 import problems.Strings;
 import static org.junit.Assert.*;
 
-public class SortsAndSearchesTest {
+public class SortsSearchesAndMathsTest {
 	@Test
 	public void quicksortNonEmpty() {
 		int[] a = {5, 1, 7, 8, 23, 100, 0};
@@ -105,4 +106,57 @@ public class SortsAndSearchesTest {
 		assertEquals(res, 0);
 	}
 	
+	@Test
+	public void testFibonacci1() {
+		int res = fibonacci(1);
+		assertTrue(res == 0);
+	}
+	@Test
+	public void testFibonacci2() {
+		int res = fibonacci(9);
+		assertTrue(res == 21);
+	}
+	
+	@Test
+	public void testFibonacci3() {
+		int res = fibonacci(10);
+		assertTrue(res == 34);
+	}
+	
+	
+	
+	//inefficientFibonacciWithMemos
+	@Test
+	public void testFibonacci4() {
+		int res = inefficientFibonacciWithMemos(1);
+		assertTrue(res == 0);
+	}
+	@Test
+	public void testFibonacci5() {
+		int res = inefficientFibonacciWithMemos(9);
+		assertTrue(res == 21);
+	}
+	
+	@Test
+	public void testFibonacci6() {
+		int res = inefficientFibonacciWithMemos(10);
+		assertTrue(res == 34);
+	}
+	
+	@Test
+	public void testFibonacci7() {
+		int res = inefficientFibonacci(1);
+		assertTrue(res == 0);
+	}
+	@Test
+	public void testFibonacci8() {
+		int res = inefficientFibonacci(9);
+		assertTrue(res == 21);
+	}
+	
+	@Test
+	public void testFibonacci9() {
+		int res = inefficientFibonacci(10);
+		assertTrue(res == 34);
+	}
 }

@@ -5,7 +5,14 @@ import java.util.Arrays;
 // nlgn only sorts :)
 public class SortsAndSearches {
 	/****************************************** QUICKSORT *******************************************/
-	// in place
+	// in place - hence space complexity is O(lg n) for the call stack! (lg n calls)
+	// the naive one, which is not in place and returns the new subarray after each quicksort, 
+	// takes O(n) space, which is as bad as merge sort!
+	// however, not stable sort
+	
+	// here we choose the leftmost element to partition around, which causes worst case time (0 (n^2)) 
+	// for already sorted arrays, as at the top level, the index returned is always the leftmost one...
+	// you could randomise this algo by picking random index, and swapping it w/ first elem
 	public static void quicksort(int[] a, int i, int j) {
 		//System.out.println("Called with i, j : (" + i + ", " + j + ")");
 		//System.out.println(Arrays.toString(Arrays.copyOfRange(a, i, j + 1))); // copyOfRange does Not include the last index
