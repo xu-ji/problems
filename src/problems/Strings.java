@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import data_structures.Pair;
+
 public class Strings {
 	
 	public static void main(String[] args) {
@@ -222,7 +224,7 @@ public class Strings {
 		//Iterator<Integer> points = zeros.iterator();
 		
 		for (Integer point : zeros) {
-			Pair<Integer> XY = getXY(point);
+			Pair<Integer, Integer> XY = getXY(point);
 			int row = XY.fst;
 			int col = XY.snd;
 			setRowToBeZero(m, width, row);
@@ -230,14 +232,14 @@ public class Strings {
 		}
 	}
 	
-	private static Pair<Integer> getXY(int point) {
+	private static Pair<Integer, Integer> getXY(int point) {
 		int x = 0;
 		while ((point & 1) == 1) {
 			point /= 2;
 			x++;
 		}
 		int y = point >> 1;
-		return new Pair<Integer>(x, y);
+		return new Pair<Integer, Integer>(x, y);
 	}
 	
 	private static void setRowToBeZero(int[][] m, int lengthOfRow, int row) {	

@@ -1,4 +1,4 @@
-package problems;
+package data_structures;
 
 // maxheap!
 public class Heap {
