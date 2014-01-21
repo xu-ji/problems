@@ -93,10 +93,39 @@ public class SortsAndSearches {
 		return res;
 	}
 	
+	// in place
+	public static void quicksort(int[] array, int l, int r) {
+		if (r <= l) {
+			return;
+		}
+		int partition = partition(array, l, r);
+		quicksort(array, l, partition - 1);
+		quicksort(array, partition + 1, r);
+	}
 	
-	public static void quicksort() {
-		
-		
+	// partitions around the first element
+	public static int partition(int[] array, int l, int r) {
+		int pivot = array[l];
+		// l and r are next places to put things
+		// invariant is everything outside l and r are sorted
+		while (l < r) {
+			int elem = array[l + 1];
+			if (elem > pivot) {
+				swap(array, l + 1, r);
+				r--; // left does not change, have not deposited anything
+			} else {
+				swap(array, l, l+1);
+				l++; // right does not change, have not deposited anything
+			}
+		}
+		array[l] = pivot;
+		return l;
+	}
+	
+	public static void swap(int[] array, int a, int b) {
+		int temp = array[a];
+		array[a] = array[b];
+		array[b] = temp;
 	}
 	
 	// start with the same, ends with the same, same length
