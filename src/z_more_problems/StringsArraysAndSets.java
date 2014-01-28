@@ -61,6 +61,7 @@ public class StringsArraysAndSets {
 	}
 	
 	// same number of every character
+	// COULD JUST SORT + COMPARE
 	public boolean isPermutationOf(char[] s1, char[] s2) {
 		if (s1.length != s2.length) {
 			return false;

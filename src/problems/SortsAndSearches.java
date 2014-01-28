@@ -72,6 +72,8 @@ public class SortsAndSearches {
 		return start - 1;
 	}*/
 	
+	
+	// HAVE WHILE LOOP AT END. MAIN LOOP = aCurr != a.length && bCurr != b.length
 	/****************************************** MERGESORT *******************************************/
 	// not in place
 	public static int[] mergesort(int[] a, int i, int j) {
