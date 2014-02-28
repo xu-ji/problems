@@ -117,7 +117,7 @@ public class StringsArraysAndSets {
 			// each i is a unique combo of the integers...
 			for (int bit = 0; bit < 32; bit++) {
 				if ((i >> bit & 1) == 1){
-					newEntry.add(s.at(bit));
+					newEntry.add(s.get(bit));
 				}
 			}
 			

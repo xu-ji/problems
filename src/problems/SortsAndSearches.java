@@ -30,7 +30,7 @@ public class SortsAndSearches {
 	private static int partition(int[] a, int i, int j) {
 		// paritions array around a[i], returning final position of a[i]
 		int x = a[i];
-		// everything behind a[i] is sorted
+		// everything behind a[i] is sorted - i and j are next free spaces
 		while (i < j) {
 			int currElem = a[i + 1];
 			if (currElem < x) {
@@ -50,28 +50,6 @@ public class SortsAndSearches {
 		a[i] = a[j];
 		a[j] = temp;
 	}
-
-	/*
-	public static int partitionfromtruestart(int[] a, int i, int j) {
-		// paritions array around a[i], returning final position of a[i]
-		int x = a[i];
-		int start = i + 1;
-		int end = j;
-		// everything behind a[start - 1] is sorted
-		while (start - 1 < end) {
-			int currElem = a[start];
-			if (currElem < x) {
-				a[start - 1] = currElem;
-				start++;
-			} else {
-				swap(a, start, end);
-				end--;
-			}
-		}
-		a[start - 1] = x;
-		return start - 1;
-	}*/
-	
 	
 	// HAVE WHILE LOOP AT END. MAIN LOOP = aCurr != a.length && bCurr != b.length
 	/****************************************** MERGESORT *******************************************/
